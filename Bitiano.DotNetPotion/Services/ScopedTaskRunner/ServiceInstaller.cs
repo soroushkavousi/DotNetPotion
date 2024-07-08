@@ -4,7 +4,7 @@ namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner;
 
 public static class ServiceInstaller
 {
-    public static IServiceCollection AddTaskService(this IServiceCollection services)
+    public static IServiceCollection AddScopedTaskRunner(this IServiceCollection services)
     {
         services.AddSingleton<IScopedTaskRunner, ScopedTaskRunner>();
         return services;
