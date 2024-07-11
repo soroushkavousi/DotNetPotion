@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner;
-
-public static class ServiceInstaller
+namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner
 {
-    public static IServiceCollection AddScopedTaskRunner(this IServiceCollection services)
+    public static class ServiceInstaller
     {
-        services.AddSingleton<IScopedTaskRunner, ScopedTaskRunner>();
-        return services;
+        public static IServiceCollection AddScopedTaskRunner(this IServiceCollection services)
+        {
+            services.AddSingleton<IScopedTaskRunner, ScopedTaskRunner>();
+            return services;
+        }
     }
 }

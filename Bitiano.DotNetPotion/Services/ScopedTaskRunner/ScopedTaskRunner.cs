@@ -1,65 +1,75 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner;
-
-public class ScopedTaskRunner(IServiceProvider serviceProvider) : IScopedTaskRunner
+namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-    public Task<T> Run<T>(IRequest<T> request)
+    public class ScopedTaskRunner : IScopedTaskRunner
     {
-        return Run(async (scope) =>
+        private readonly IServiceProvider _serviceProvider;
+
+        public ScopedTaskRunner(IServiceProvider serviceProvider)
         {
-            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            return await mediator.Send(request);
-        });
-    }
+            _serviceProvider = serviceProvider;
+        }
 
-    public Task Run(IRequest request)
-    {
-        return Run(async (scope) =>
+        public Task<T> Run<T>(IRequest<T> request)
         {
-            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            await mediator.Send(request);
-        });
-    }
+            return Run(async (scope) =>
+            {
+                IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                return await mediator.Send(request);
+            });
+        }
 
-    public Task Run(Func<IServiceScope, Task> function)
-    {
-        return Task.Run(async () =>
+        public Task Run(IRequest request)
         {
-            using IServiceScope scope = _serviceProvider.CreateScope();
-            await function(scope);
-        });
-    }
+            return Run(async (scope) =>
+            {
+                IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                await mediator.Send(request);
+            });
+        }
 
-    public Task<T> Run<T>(Func<IServiceScope, Task<T>> function)
-    {
-        return Task.Run(async () =>
+        public Task Run(Func<IServiceScope, Task> function)
         {
-            using IServiceScope scope = _serviceProvider.CreateScope();
-            return await function(scope);
-        });
-    }
+            return Task.Run(async () =>
+            {
+                using (IServiceScope scope = _serviceProvider.CreateScope())
+                {
+                    await function(scope);
+                }
+            });
+        }
 
-    public void FireAndForget<T>(IRequest<T> command)
-    {
-        _ = Run(command);
-    }
+        public Task<T> Run<T>(Func<IServiceScope, Task<T>> function)
+        {
+            return Task.Run(async () =>
+            {
+                using (IServiceScope scope = _serviceProvider.CreateScope())
+                {
+                    return await function(scope);
+                }
+            });
+        }
 
-    public void FireAndForget(IRequest command)
-    {
-        _ = Run(command);
-    }
+        public void FireAndForget<T>(IRequest<T> command)
+        {
+            _ = Run(command);
+        }
 
-    public void FireAndForget(Func<IServiceScope, Task> function)
-    {
-        _ = Run(function);
-    }
+        public void FireAndForget(IRequest command)
+        {
+            _ = Run(command);
+        }
 
-    public void FireAndForget<T>(Func<IServiceScope, Task<T>> function)
-    {
-        _ = Run(function);
+        public void FireAndForget(Func<IServiceScope, Task> function)
+        {
+            _ = Run(function);
+        }
+
+        public void FireAndForget<T>(Func<IServiceScope, Task<T>> function)
+        {
+            _ = Run(function);
+        }
     }
 }
