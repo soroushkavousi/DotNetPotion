@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bitiano.DotNetPotion.Services.ScopedTaskRunner
+namespace DotNetPotion.Services.ScopedTaskRunner
 {
     public interface IScopedTaskRunner
     {
