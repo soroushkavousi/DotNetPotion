@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>DotNetPotion</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Soroush Kavousi</Authors>
     <Product>DotNetPotion</Product>
     <Description>DotNetPotion offers ready-to-use tools to simplify and enhance your development experience, making your code more efficient and easier to manage.</Description>
