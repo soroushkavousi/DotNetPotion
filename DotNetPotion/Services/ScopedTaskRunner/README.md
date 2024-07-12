@@ -1,9 +1,3 @@
-# DotNetPotion
-
-[![NuGet](https://img.shields.io/badge/nuget-v1.0.0-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
-
-<br/>
-
 # ScopedTaskRunner
 
 The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**. 
