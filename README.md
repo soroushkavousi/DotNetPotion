@@ -1,12 +1,16 @@
 # DotNetPotion
 
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.0-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
+[![NuGet](https://img.shields.io/badge/supported_.net_core_versions->=_v2.0-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
+[![NuGet](https://img.shields.io/badge/supported_.net_framework_versions->=_v4.6.1-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
+
 Ready to write some .NET code? **Drink this potion** to warm up and get started!
 
 **DotNetPotion** offers ready-to-use tools to simplify and enhance your development experience, making your code more efficient and easier to manage.
 
-# Installation (To-Do)
+# Installation
 
-To install `DotNetPotion`, run the following command in the Package Manager Console:
+To install `DotNetPotion`, run one of the following commands:
 
 ```shell
 dotnet add package DotNetPotion
@@ -18,64 +22,14 @@ or
 Install-Package DotNetPotion
 ```
 
-# Tools
+# Provided Tools
 
-1. [ScopedTaskRunner](#1-scopedtaskrunner)
 
----
+1. **ScopedTaskRunner** [\[docs\]](./DotNetPotion/Services/ScopedTaskRunner)
 
-## 1. ScopedTaskRunner
+The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**.
 
-The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope** using `Task.Run`. It additionally provides functionality to run **MediatR** IRequest objects and **fire-and-forget** tasks effortlessly.
 
-One use-case for this tools is **when you want to use your DbContext concurrently**.
-
-### How to use
-
-- Inject Service
-
-Register the service in your dependency injection container:
-
-```csharp
-services.AddScopedTaskRunner();
-```
-
-<br/>
-
-- Execute MediatoR Commands
-
-Fire-and-forget:
-
-```csharp
-_scopedTaskRunner.FireAndForget(new YourMediatRCommand());
-```
-
-Running multiple commands concurrently:
-
-```csharp
-List<Task> tasks = [];
-tasks.Add(_scopedTaskRunner.Run(new YourMediatRCommand1());
-tasks.Add(_scopedTaskRunner.Run(new YourMediatRCommand2());
-await Task.WhenAll(tasks);
-```
-
-<br/>
-
-- Access the New Scope
-
-Run a task with access to the new scope:
-
-```csharp
-_scopedTaskRunner.Run(async scope =>
-{
-    // Get services from the new scope
-    IAppDbContext appDbContext = scope.ServiceProvider.GetRequiredService<IAppDbContext>();
-
-    // Your logic here...
-});
-```
-
----
 
 # Contributing
 
