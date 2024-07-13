@@ -41,6 +41,10 @@ Install-Package DotNetPotion
 
 The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**.
 
+2. **SemaphorePool** [\[docs\]](./DotNetPotion/SemaphorePool)
+
+`SemaphorePool` provides key-based SemaphoreSlim instances for dynamic and reusable thread-locking mechanism, allowing configurable timeouts and logging thresholds to efficiently manage and monitor access to shared resources.
+
 <br/>
 
 # Contributing
