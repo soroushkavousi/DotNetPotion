@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.Services.ScopedTaskRunner
+namespace DotNetPotion.ScopedTaskRunner
 {
     public static class ServiceInstaller
     {
