@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\assets\logo\DotNetPotion_128x128.jpeg">
+    <None Include="..\..\assets\logo\DotNetPotion_128x128.jpeg">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\README.md">
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

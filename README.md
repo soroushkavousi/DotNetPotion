@@ -37,11 +37,11 @@ Install-Package DotNetPotion
 # Provided Tools
 
 
-1. **ScopedTaskRunner** [\[docs\]](./DotNetPotion/ScopedTaskRunner)
+1. **ScopedTaskRunner** [\[docs\]](./src/DotNetPotion/ScopedTaskRunner)
 
 The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**.
 
-2. **SemaphorePool** [\[docs\]](./DotNetPotion/SemaphorePool)
+2. **SemaphorePool** [\[docs\]](./src/DotNetPotion/SemaphorePool)
 
 `SemaphorePool` provides key-based SemaphoreSlim instances for dynamic and reusable thread-locking mechanism, allowing configurable timeouts and logging thresholds to efficiently manage and monitor access to shared resources.
 
