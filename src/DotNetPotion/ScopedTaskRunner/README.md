@@ -1,14 +1,30 @@
 # ScopedTaskRunner
 
-The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**. 
+The `ScopedTaskRunner` service enables you to execute a task in a new thread within a new Service Provider scope.
 
-- One use-case for this tools is **when you want to use your DbContext concurrently**.
+<br/>
 
-- It additionally provides functionality to run **MediatR** IRequest objects and **fire-and-forget** tasks effortlessly.
+## Features
+
+- Provides access to a new service provider scope within a new thread
+- Supports **fire-and-forget** functionality
+- Supports **MediatR** commands and queries
+
+<br/>
+
+## Sample Use Cases
+
+- When you need to use your **DbContext concurrently**
+- When you want to execute a **background task** to avoid delaying the request scope completion
+
 
 <br/>
 
 ## How to use
+
+- For detailed usage examples, please refer to the tests in the `ScopedTaskRunner` directory within the `tests` folder.
+
+<br/>
 
 ### Inject the service
 
