@@ -5,7 +5,7 @@
 <br/>
 
 ## Key Features
-- **Dynamic Locking with Keys:** Use dynamic parameters such as UserId for locking, allowing users to avoid waiting for locked code sections of other users.
+- **Dynamic Locking with Keys:** Use dynamic parameters such as UserId for locking, allowing users to avoid waiting for locked code sections of other users. This approach drastically boosts locking performance.
 
 - **Reusable Synchronization:** Utilize the same SemaphoreSlim across different locations by using a consistent key, ensuring consistent locking behavior.
 
