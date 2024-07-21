@@ -1,16 +1,30 @@
-name: CI
+name: Build and Test
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: Test
 
     steps:
     - name: Checkout repository
@@ -20,6 +34,13 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h localhost -p 5433 -U test; do
+          echo "Waiting for database to be ready..."
+          sleep 2
+        done
 
     - name: Restore dependencies
       run: dotnet restore
