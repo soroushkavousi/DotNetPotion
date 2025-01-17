@@ -1,13 +1,13 @@
-﻿using DotNetPotion.ScopedTaskRunner;
-using DotNetPotion.Tests.ScopedTaskRunner.Data;
-using DotNetPotion.Tests.ScopedTaskRunner.ProductApplication.AddProduct;
+﻿using System.Reflection;
+using DotNetPotion.ScopedTaskRunnerPack;
+using DotNetPotion.Tests.ScopedTaskRunnerTests.Data;
+using DotNetPotion.Tests.ScopedTaskRunnerTests.ProductApplication.AddProduct;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace DotNetPotion.Tests.ScopedTaskRunner;
+namespace DotNetPotion.Tests.ScopedTaskRunnerTests;
 
 public class ScopedTaskRunnerTests
 {
@@ -53,6 +53,7 @@ public class ScopedTaskRunnerTests
             {
                 tasks.Add(_mediator.Send(new AddProductCommand { Name = productName }));
             }
+
             await Task.WhenAll(tasks);
         }
         catch (Exception ex)
@@ -78,6 +79,7 @@ public class ScopedTaskRunnerTests
         {
             tasks.Add(_scopedTaskRunner.Run(new AddProductCommand { Name = productName }));
         }
+
         await Task.WhenAll(tasks);
 
         // Assert
@@ -116,7 +118,7 @@ public class ScopedTaskRunnerTests
         // Act
         foreach (string productName in productNames)
         {
-            _scopedTaskRunner.FireAndForget(async (scope) =>
+            _scopedTaskRunner.FireAndForget(async scope =>
             {
                 AppDbContext appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 Product product = new(productName);

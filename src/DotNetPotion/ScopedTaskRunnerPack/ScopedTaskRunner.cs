@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.ScopedTaskRunner
+namespace DotNetPotion.ScopedTaskRunnerPack
 {
     public class ScopedTaskRunner : IScopedTaskRunner
     {
@@ -16,7 +16,7 @@ namespace DotNetPotion.ScopedTaskRunner
 
         public Task<T> Run<T>(IRequest<T> request)
         {
-            return Run(async (scope) =>
+            return Run(async scope =>
             {
                 IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                 return await mediator.Send(request);
@@ -25,7 +25,7 @@ namespace DotNetPotion.ScopedTaskRunner
 
         public Task Run(IRequest request)
         {
-            return Run(async (scope) =>
+            return Run(async scope =>
             {
                 IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                 await mediator.Send(request);

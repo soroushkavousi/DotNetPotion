@@ -1,20 +1,19 @@
-﻿using DotNetPotion.SemaphorePool;
+﻿using DotNetPotion.SemaphorePoolPack;
 
-namespace DotNetPotion.Tests.SemaphorePool;
+namespace DotNetPotion.Tests.SemaphorePoolTests;
 
 public class UserBalanceService(ISemaphorePool semaphorePool)
 {
-    private readonly ISemaphorePool _semaphorePool = semaphorePool;
     private readonly SemaphoreSlim _sharedSemaphoreSlim = new(1, 1);
 
     private readonly Dictionary<int, decimal> _userBalances = [];
 
     public async Task DecreaseUserBalanceWithSemaphorePoolAsync(int userId, decimal count)
     {
-        SemaphoreSlim semaphore = await _semaphorePool.WaitAsync($"User_{userId}");
+        SemaphoreSlim semaphore = await semaphorePool.WaitAsync($"User_{userId}");
         try
         {
-            decimal currentUserBalance = await GetUserBlanaceAsync(userId);
+            decimal currentUserBalance = await GetUserBalanceAsync(userId);
             if (currentUserBalance < count)
                 return;
 
@@ -32,7 +31,7 @@ public class UserBalanceService(ISemaphorePool semaphorePool)
         await _sharedSemaphoreSlim.WaitAsync();
         try
         {
-            decimal currentUserBalance = await GetUserBlanaceAsync(userId);
+            decimal currentUserBalance = await GetUserBalanceAsync(userId);
             if (currentUserBalance < count)
                 return;
 
@@ -51,7 +50,7 @@ public class UserBalanceService(ISemaphorePool semaphorePool)
         return Task.CompletedTask;
     }
 
-    public async Task<decimal> GetUserBlanaceAsync(int userId)
+    public async Task<decimal> GetUserBalanceAsync(int userId)
     {
         await Task.Delay(4); // database delay simulation
         return _userBalances[userId];

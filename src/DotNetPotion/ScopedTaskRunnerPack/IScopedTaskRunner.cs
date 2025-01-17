@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.ScopedTaskRunner
+namespace DotNetPotion.ScopedTaskRunnerPack
 {
     public interface IScopedTaskRunner
     {

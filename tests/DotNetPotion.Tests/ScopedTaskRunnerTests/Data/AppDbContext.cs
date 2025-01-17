@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DotNetPotion.Tests.ScopedTaskRunner.Data;
+namespace DotNetPotion.Tests.ScopedTaskRunnerTests.Data;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Product> Products { get; init; }
 
     private AppDbContext() { }
 

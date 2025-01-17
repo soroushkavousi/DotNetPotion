@@ -17,7 +17,6 @@ The `ScopedTaskRunner` service enables you to execute a task in a new thread wit
 - When you need to use your **DbContext concurrently**
 - When you want to execute a **background task** to avoid delaying the request scope completion
 
-
 <br/>
 
 ## How to use
