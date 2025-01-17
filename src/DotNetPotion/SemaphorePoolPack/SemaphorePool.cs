@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace DotNetPotion.SemaphorePool
+namespace DotNetPotion.SemaphorePoolPack
 {
     /// <summary>
-    /// Provides a pool of <see cref="SemaphoreSlim"/> instances identified by a key.
-    /// Allows asynchronous waiting with configurable timeout and logging thresholds.
+    ///     Provides a pool of <see cref="SemaphoreSlim" /> instances identified by a key.
+    ///     Allows asynchronous waiting with configurable timeout and logging thresholds.
     /// </summary>
     public class SemaphorePool : ISemaphorePool
     {
@@ -26,13 +26,19 @@ namespace DotNetPotion.SemaphorePool
         }
 
         /// <summary>
-        /// Asynchronously waits to enter the specified <see cref="SemaphoreSlim"/> instance.
-        /// If the timeout is reached, it will create a new semaphore to wait and retry.
+        ///     Asynchronously waits to enter the specified <see cref="SemaphoreSlim" /> instance.
+        ///     If the timeout is reached, it will create a new semaphore to wait and retry.
         /// </summary>
-        /// <param name="key">The key identifying the <see cref="SemaphoreSlim"/> instance.</param>
+        /// <param name="key">The key identifying the <see cref="SemaphoreSlim" /> instance.</param>
         /// <param name="timeout">An optional timeout value, defaulting to the configured default timeout if not specified.</param>
-        /// <param name="logTimeThreshold">An optional log threshold value, defaulting to the configured default log threshold if not specified.</param>
-        /// <returns>A task that represents the asynchronous wait operation. The task result is the <see cref="SemaphoreSlim"/> instance that was waited on.</returns>
+        /// <param name="logTimeThreshold">
+        ///     An optional log threshold value, defaulting to the configured default log threshold if
+        ///     not specified.
+        /// </param>
+        /// <returns>
+        ///     A task that represents the asynchronous wait operation. The task result is the <see cref="SemaphoreSlim" />
+        ///     instance that was waited on.
+        /// </returns>
         public async Task<SemaphoreSlim> WaitAsync(string key, TimeSpan? timeout = null, TimeSpan? logTimeThreshold = null)
         {
             Stopwatch sw = Stopwatch.StartNew();
@@ -53,6 +59,7 @@ namespace DotNetPotion.SemaphorePool
                     _semaphores.TryRemove(key, out SemaphoreSlim _);
                     return await WaitAsync(key, timeout);
                 }
+
                 return semaphore;
             }
             finally

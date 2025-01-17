@@ -1,8 +1,7 @@
-﻿using DotNetPotion.SemaphorePool;
-using DotNetPotion.Tests.SemaphorePool;
+﻿using DotNetPotion.SemaphorePoolPack;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.Tests.ScopedTaskRunner;
+namespace DotNetPotion.Tests.SemaphorePoolTests;
 
 public class SemaphorePoolTests
 {
@@ -20,7 +19,7 @@ public class SemaphorePoolTests
     }
 
     [Fact]
-    public async Task DecreaseUserBlanace_WithSemaphorePool_FastZeroBalanceResult()
+    public async Task DecreaseUserBalance_WithSemaphorePool_FastZeroBalanceResult()
     {
         // Arrange
         int[] userIds = [1, 2, 3, 4, 5];
@@ -34,18 +33,19 @@ public class SemaphorePoolTests
             foreach (int userId in userIds)
                 tasks.Add(_userBalanceService.DecreaseUserBalanceWithSemaphorePoolAsync(userId, 1));
         }
+
         await Task.WhenAll(tasks);
 
-        List<decimal> userBlanaces = [];
+        List<decimal> userBalances = [];
         foreach (int userId in userIds)
-            userBlanaces.Add(await _userBalanceService.GetUserBlanaceAsync(userId));
+            userBalances.Add(await _userBalanceService.GetUserBalanceAsync(userId));
 
         // Assert
-        Assert.True(userBlanaces.All(userBalance => userBalance == 0));
+        Assert.True(userBalances.All(userBalance => userBalance == 0));
     }
 
     [Fact]
-    public async Task DecreaseUserBlanace_WithSharedSemaphoreSlim_SlowZeroBalanceResult()
+    public async Task DecreaseUserBalance_WithSharedSemaphoreSlim_SlowZeroBalanceResult()
     {
         // Arrange
         int[] userIds = [1, 2, 3, 4, 5];
@@ -59,13 +59,14 @@ public class SemaphorePoolTests
             foreach (int userId in userIds)
                 tasks.Add(_userBalanceService.DecreaseUserBalanceWithSharedSemaphoreSlimAsync(userId, 1));
         }
+
         await Task.WhenAll(tasks);
 
-        List<decimal> userBlanaces = [];
+        List<decimal> userBalances = [];
         foreach (int userId in userIds)
-            userBlanaces.Add(await _userBalanceService.GetUserBlanaceAsync(userId));
+            userBalances.Add(await _userBalanceService.GetUserBalanceAsync(userId));
 
         // Assert
-        Assert.True(userBlanaces.All(x => x == 0));
+        Assert.True(userBalances.All(x => x == 0));
     }
 }

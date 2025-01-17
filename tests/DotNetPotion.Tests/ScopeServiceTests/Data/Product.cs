@@ -1,4 +1,4 @@
-﻿namespace DotNetPotion.Tests.ScopedTaskRunner.Data;
+﻿namespace DotNetPotion.Tests.ScopeServiceTests.Data;
 
 public class Product
 {

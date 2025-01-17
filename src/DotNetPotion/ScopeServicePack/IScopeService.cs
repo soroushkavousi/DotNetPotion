@@ -1,11 +1,11 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.ScopedTaskRunner
+namespace DotNetPotion.ScopeServicePack
 {
-    public interface IScopedTaskRunner
+    public interface IScopeService
     {
         Task<T> Run<T>(IRequest<T> request);
 
