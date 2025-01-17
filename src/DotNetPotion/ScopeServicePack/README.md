@@ -1,6 +1,6 @@
-# ScopedTaskRunner
+# ScopeService
 
-The `ScopedTaskRunner` service enables you to execute a task in a new thread within a new Service Provider scope.
+The `ScopeService` service enables you to execute a task in a new thread within a new Service Provider scope.
 
 <br/>
 
@@ -21,7 +21,7 @@ The `ScopedTaskRunner` service enables you to execute a task in a new thread wit
 
 ## How to use
 
-- For detailed usage examples, please refer to the tests in the `ScopedTaskRunner` directory within the `tests` folder.
+- For detailed usage examples, please refer to the tests in the `ScopeService` directory within the `tests` folder.
 
 <br/>
 
@@ -30,7 +30,7 @@ The `ScopedTaskRunner` service enables you to execute a task in a new thread wit
 Register the service in your dependency injection container:
 
 ```csharp
-services.AddScopedTaskRunner();
+services.AddScopeService();
 ```
 
 <br/>
@@ -40,15 +40,15 @@ services.AddScopedTaskRunner();
 Fire-and-forget:
 
 ```csharp
-_scopedTaskRunner.FireAndForget(new YourMediatRCommand());
+_scopeService.FireAndForget(new YourMediatRCommand());
 ```
 
 Running multiple commands concurrently:
 
 ```csharp
 List<Task> tasks = [];
-tasks.Add(_scopedTaskRunner.Run(new YourMediatRCommand1());
-tasks.Add(_scopedTaskRunner.Run(new YourMediatRCommand2());
+tasks.Add(_scopeService.Run(new YourMediatRCommand1());
+tasks.Add(_scopeService.Run(new YourMediatRCommand2());
 await Task.WhenAll(tasks);
 ```
 
@@ -59,7 +59,7 @@ await Task.WhenAll(tasks);
 Run a task with access to the new scope:
 
 ```csharp
-_scopedTaskRunner.Run(async scope =>
+_scopeService.Run(async scope =>
 {
     // Get services from the new scope
     IAppDbContext appDbContext = scope.ServiceProvider.GetRequiredService<IAppDbContext>();

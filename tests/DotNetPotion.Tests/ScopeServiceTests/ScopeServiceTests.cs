@@ -1,33 +1,33 @@
 ﻿using System.Reflection;
-using DotNetPotion.ScopedTaskRunnerPack;
-using DotNetPotion.Tests.ScopedTaskRunnerTests.Data;
-using DotNetPotion.Tests.ScopedTaskRunnerTests.ProductApplication.AddProduct;
+using DotNetPotion.ScopeServicePack;
+using DotNetPotion.Tests.ScopeServiceTests.Data;
+using DotNetPotion.Tests.ScopeServiceTests.ProductApplication.AddProduct;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.Tests.ScopedTaskRunnerTests;
+namespace DotNetPotion.Tests.ScopeServiceTests;
 
-public class ScopedTaskRunnerTests
+public class ScopeServiceTests
 {
-    private const string _dbConnectionString = "Host=localhost;Port=5433;Database=TestDb_ScopedTaskRunner;Username=test;Password=Test";
+    private const string _dbConnectionString = "Host=localhost;Port=5433;Database=TestDb_ScopeService;Username=test;Password=Test";
 
     private readonly IServiceProvider _serviceProvider;
     private readonly IServiceScope _serviceScope;
-    private readonly IScopedTaskRunner _scopedTaskRunner;
+    private readonly IScopeService _scopeService;
     private readonly IMediator _mediator;
     private readonly AppDbContext _appDbContext;
 
-    public ScopedTaskRunnerTests()
+    public ScopeServiceTests()
     {
         ServiceCollection services = new();
         services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()); });
-        services.AddScopedTaskRunner();
+        services.AddScopeService();
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(_dbConnectionString));
 
         _serviceProvider = services.BuildServiceProvider();
-        _scopedTaskRunner = _serviceProvider.GetService<IScopedTaskRunner>();
+        _scopeService = _serviceProvider.GetService<IScopeService>();
 
         _serviceScope = _serviceProvider.CreateScope();
         _mediator = _serviceScope.ServiceProvider.GetRequiredService<IMediator>();
@@ -67,7 +67,7 @@ public class ScopedTaskRunnerTests
     }
 
     [Fact]
-    public async Task AppDbContextInsideMediatR_WhenUseConcurrencyWithScopedTaskRunner_ShouldSuccess()
+    public async Task AppDbContextInsideMediatR_WhenUseConcurrencyWithScopeService_ShouldSuccess()
     {
         // Arrange
         await _appDbContext.Products.ExecuteDeleteAsync();
@@ -77,7 +77,7 @@ public class ScopedTaskRunnerTests
         // Act
         foreach (string productName in productNames)
         {
-            tasks.Add(_scopedTaskRunner.Run(new AddProductCommand { Name = productName }));
+            tasks.Add(_scopeService.Run(new AddProductCommand { Name = productName }));
         }
 
         await Task.WhenAll(tasks);
@@ -98,7 +98,7 @@ public class ScopedTaskRunnerTests
         // Act
         foreach (string productName in productNames)
         {
-            _scopedTaskRunner.FireAndForget(new AddProductCommand { Name = productName });
+            _scopeService.FireAndForget(new AddProductCommand { Name = productName });
         }
 
         // Assert
@@ -109,7 +109,7 @@ public class ScopedTaskRunnerTests
     }
 
     [Fact]
-    public async Task AppDbContext_WhenUseConcurrencyWithScopedTaskRunner_ShouldSuccess()
+    public async Task AppDbContext_WhenUseConcurrencyWithScopeService_ShouldSuccess()
     {
         // Arrange
         await _appDbContext.Products.ExecuteDeleteAsync();
@@ -118,7 +118,7 @@ public class ScopedTaskRunnerTests
         // Act
         foreach (string productName in productNames)
         {
-            _scopedTaskRunner.FireAndForget(async scope =>
+            _scopeService.FireAndForget(async scope =>
             {
                 AppDbContext appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 Product product = new(productName);

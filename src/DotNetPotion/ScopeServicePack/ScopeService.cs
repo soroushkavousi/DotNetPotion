@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DotNetPotion.ScopedTaskRunnerPack
+namespace DotNetPotion.ScopeServicePack
 {
-    public class ScopedTaskRunner : IScopedTaskRunner
+    public class ScopeService : IScopeService
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ScopedTaskRunner(IServiceProvider serviceProvider)
+        public ScopeService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

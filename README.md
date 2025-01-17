@@ -1,6 +1,6 @@
 # DotNetPotion
 
-[![NuGet](https://img.shields.io/badge/nuget-v1.2.0-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
+[![NuGet](https://img.shields.io/badge/nuget-v2.0.0-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
 [![NuGet](https://img.shields.io/badge/supported_.net_core_versions->=_v2.0-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
 [![NuGet](https://img.shields.io/badge/supported_.net_framework_versions->=_v4.6.1-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
 
@@ -42,9 +42,9 @@ Install-Package DotNetPotion
 `AppEnvironment` effortlessly identifies the current environment in which your application is running. (e.g.,
 `AppEnvironment.IsProduction`).
 
-2. **ScopedTaskRunner** [\[docs\]](./src/DotNetPotion/ScopedTaskRunner)
+2. **ScopeService** [\[docs\]](./src/DotNetPotion/ScopeService)
 
-The `ScopedTaskRunner` service allows you to run a task in a new thread within **a new Service Provider scope**.
+The `ScopeService` service allows you to run a task in a new thread within **a new Service Provider scope**.
 
 3. **SemaphorePool** [\[docs\]](./src/DotNetPotion/SemaphorePool)
 

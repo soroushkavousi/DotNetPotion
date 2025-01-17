@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DotNetPotion.Tests.ScopedTaskRunnerTests.ProductApplication.AddProduct;
+namespace DotNetPotion.Tests.ScopeServiceTests.ProductApplication.AddProduct;
 
 public class AddProductCommand : IRequest
 {
