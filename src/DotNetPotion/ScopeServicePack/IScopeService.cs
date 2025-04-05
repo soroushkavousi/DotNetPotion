@@ -11,6 +11,8 @@ namespace DotNetPotion.ScopeServicePack
 
         Task Run(IRequest request);
 
+        Task Run(params INotification[] events);
+
         Task Run(Func<IServiceScope, Task> function);
 
         Task<T> Run<T>(Func<IServiceScope, Task<T>> function);
@@ -18,6 +20,8 @@ namespace DotNetPotion.ScopeServicePack
         void FireAndForget<T>(IRequest<T> command);
 
         void FireAndForget(IRequest command);
+
+        void FireAndForget(params INotification[] @event);
 
         void FireAndForget(Func<IServiceScope, Task> function);
 
