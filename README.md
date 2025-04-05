@@ -1,6 +1,10 @@
 # DotNetPotion
 
-[![NuGet](https://img.shields.io/badge/nuget-v2.0.0-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
+<p align="center">
+  <img src="assets/logo/DotNetPotion_128x128.jpeg" alt="DotNetPotion Logo" width="128" />
+</p>
+
+[![NuGet](https://img.shields.io/badge/nuget-v2.0.1-blue?logo=nuget)](https://www.nuget.org/packages/DotNetPotion)
 [![NuGet](https://img.shields.io/badge/supported_.net_core_versions->=_v2.0-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
 [![NuGet](https://img.shields.io/badge/supported_.net_framework_versions->=_v4.6.1-4CAF50?logo=.net)](https://www.nuget.org/packages/DotNetPotion#supportedframeworks-body-tab)
 
