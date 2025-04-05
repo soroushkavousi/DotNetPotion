@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,16 @@ namespace DotNetPotion.ScopeServicePack
             });
         }
 
+        public Task Run(params INotification[] events)
+        {
+            return Run(async scope =>
+            {
+                IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                IEnumerable<Task> tasks = events.Select(@event => mediator.Publish(@event));
+                await Task.WhenAll(tasks);
+            });
+        }
+
         public Task Run(Func<IServiceScope, Task> function)
         {
             return Task.Run(async () =>
@@ -62,6 +74,11 @@ namespace DotNetPotion.ScopeServicePack
         public void FireAndForget(IRequest command)
         {
             _ = Run(command);
+        }
+
+        public void FireAndForget(params INotification[] @event)
+        {
+            _ = Run(@event);
         }
 
         public void FireAndForget(Func<IServiceScope, Task> function)

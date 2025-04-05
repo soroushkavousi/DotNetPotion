@@ -8,7 +8,7 @@ The `ScopeService` service enables you to execute a task in a new thread within 
 
 - Provides access to a new service provider scope within a new thread
 - Supports **fire-and-forget** functionality
-- Supports **MediatR** commands and queries
+- Supports **MediatR** commands, queries, and notifications
 
 <br/>
 
@@ -16,6 +16,7 @@ The `ScopeService` service enables you to execute a task in a new thread within 
 
 - When you need to use your **DbContext concurrently**
 - When you want to execute a **background task** to avoid delaying the request scope completion
+- When you want to publish MediatR notifications in a new scope
 
 <br/>
 
